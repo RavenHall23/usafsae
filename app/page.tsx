@@ -8,7 +8,7 @@ export default function Home() {
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <h1 className="text-white text-xl font-bold">USA FSAE</h1>
+                <h1 className="text-white text-x2 font-bold">USA FSAE</h1>
               </div>
             </div>
             <div className="hidden md:block">
@@ -103,7 +103,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
             <div className="border-4 border-dashed border-gray-600 rounded-lg h-96 flex items-center justify-center">
-              <p className="text-gray-400 text-lg">Welcome to USA FSAE</p>
+              <p className="text-gray-400 text-lg">University of South Alabama Formula Society of Automotive Engineers</p>
             </div>
           </div>
         </div>
