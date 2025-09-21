@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
-export default function Home() {
+export default function Resources() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -79,7 +79,7 @@ export default function Home() {
             <div className="px-4 pt-4 pb-6 space-y-2 bg-gray-200 border-t border-gray-300 shadow-lg">
               <a
                 href="/resources"
-                className="text-gray-600 hover:bg-gray-300 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-400"
+                className="bg-gray-400 text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-500"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -115,11 +115,46 @@ export default function Home() {
       {/* Main Content */}
       <main className="flex-1">
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-            <div className="px-4 py-6 sm:px-0">
-              <div className="border-4 border-dashed border-gray-400 rounded-lg h-96 flex items-center justify-center">
-                <p className="text-gray-600 text-lg">University of South Alabama's Formula Society of Automotive Engineers</p>
+          <div className="px-4 py-6 sm:px-0">
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h1 className="text-3xl font-bold text-gray-900 mb-8">Resources</h1>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {/* Technical Resources */}
+                <div className="bg-gray-50 rounded-lg p-6">
+                  <h2 className="text-xl font-semibold text-gray-800 mb-4">Technical Resources</h2>
+                  <ul className="space-y-2">
+                    <li><a href="#" className="text-blue-600 hover:text-blue-800">FSAE Rules & Regulations</a></li>
+                    <li><a href="#" className="text-blue-600 hover:text-blue-800">Design Guidelines</a></li>
+                    <li><a href="#" className="text-blue-600 hover:text-blue-800">CAD Software Access</a></li>
+                    <li><a href="#" className="text-blue-600 hover:text-blue-800">Simulation Tools</a></li>
+                  </ul>
+                </div>
+
+                {/* Team Documents */}
+                <div className="bg-gray-50 rounded-lg p-6">
+                  <h2 className="text-xl font-semibold text-gray-800 mb-4">Team Documents</h2>
+                  <ul className="space-y-2">
+                    <li><a href="#" className="text-blue-600 hover:text-blue-800">Meeting Minutes</a></li>
+                    <li><a href="#" className="text-blue-600 hover:text-blue-800">Design Reports</a></li>
+                    <li><a href="#" className="text-blue-600 hover:text-blue-800">Budget Planning</a></li>
+                    <li><a href="#" className="text-blue-600 hover:text-blue-800">Safety Protocols</a></li>
+                  </ul>
+                </div>
+
+                {/* External Links */}
+                <div className="bg-gray-50 rounded-lg p-6">
+                  <h2 className="text-xl font-semibold text-gray-800 mb-4">External Links</h2>
+                  <ul className="space-y-2">
+                    <li><a href="https://www.fsaeonline.com" className="text-blue-600 hover:text-blue-800" target="_blank" rel="noopener noreferrer">FSAE Online</a></li>
+                    <li><a href="https://www.sae.org" className="text-blue-600 hover:text-blue-800" target="_blank" rel="noopener noreferrer">SAE International</a></li>
+                    <li><a href="#" className="text-blue-600 hover:text-blue-800">Competition Results</a></li>
+                    <li><a href="#" className="text-blue-600 hover:text-blue-800">Sponsor Information</a></li>
+                  </ul>
+                </div>
               </div>
             </div>
+          </div>
         </div>
       </main>
     </div>
