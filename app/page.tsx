@@ -26,9 +26,9 @@ export default function Home() {
   }, [isMenuOpen]);
 
   return (
-    <div className="min-h-screen bg-gray-800">
+    <div className="min-h-screen bg-gray-100">
       {/* Navigation Bar */}
-      <nav className="bg-gray-900 border-b border-gray-700">
+      <nav className="bg-gray-200 border-b border-gray-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
@@ -40,7 +40,7 @@ export default function Home() {
                   height={40}
                   className="rounded-full"
                 />
-                <h1 className="text-white text-xl font-bold">USA FSAE</h1>
+                <h1 className="text-gray-800 text-xl font-bold">USA FSAE</h1>
               </div>
             </div>
             {/* Mobile menu button */}
@@ -48,7 +48,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={toggleMenu}
-                className="bg-gray-700 hover:bg-gray-600 inline-flex items-center justify-center p-3 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-200 min-h-[44px] min-w-[44px]"
+                className="bg-gray-300 hover:bg-gray-400 inline-flex items-center justify-center p-3 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-200 transition-all duration-200 min-h-[44px] min-w-[44px]"
                 aria-controls="mobile-menu"
                 aria-expanded={isMenuOpen}
               >
@@ -75,10 +75,10 @@ export default function Home() {
         {/* Mobile menu */}
         {isMenuOpen && (
           <div id="mobile-menu">
-            <div className="px-4 pt-4 pb-6 space-y-2 bg-gray-900 border-t border-gray-700 shadow-lg">
+            <div className="px-4 pt-4 pb-6 space-y-2 bg-gray-200 border-t border-gray-300 shadow-lg">
               <a
                 href="#"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-600"
+                className="text-gray-600 hover:bg-gray-300 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-400"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -88,7 +88,7 @@ export default function Home() {
               </a>
               <a
                 href="#"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-600"
+                className="text-gray-600 hover:bg-gray-300 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-400"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,7 +98,7 @@ export default function Home() {
               </a>
               <a
                 href="#"
-                className="bg-gray-800 text-white block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-700"
+                className="bg-gray-400 text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-500"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -108,7 +108,7 @@ export default function Home() {
               </a>
               <a
                 href="#"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-600"
+                className="text-gray-600 hover:bg-gray-300 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-400"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -124,11 +124,11 @@ export default function Home() {
       {/* Main Content */}
       <main className="flex-1">
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
-            <div className="border-4 border-dashed border-gray-600 rounded-lg h-96 flex items-center justify-center">
-              <p className="text-gray-400 text-lg">University of South Alabama's Formula Society of Automotive Engineers</p>
+            <div className="px-4 py-6 sm:px-0">
+              <div className="border-4 border-dashed border-gray-400 rounded-lg h-96 flex items-center justify-center">
+                <p className="text-gray-600 text-lg">University of South Alabama's Formula Society of Automotive Engineers</p>
+              </div>
             </div>
-          </div>
         </div>
       </main>
     </div>
