@@ -88,7 +88,7 @@ export default function Calendar() {
                   height={40}
                   className="rounded-full"
                 />
-                <h1 className="text-gray-800 text-xl font-bold">USA FSAE</h1>
+                <h1 className="text-gray-800 text-xl font-bold">Jag Racing</h1>
               </Link>
             </div>
             {/* Mobile menu button */}
@@ -143,6 +143,16 @@ export default function Calendar() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 Contact Us
+              </a>
+              <a
+                href="/sponsors"
+                className="text-gray-600 hover:bg-gray-300 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-400"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                </svg>
+                Sponsors
               </a>
               <a
                 href="/calendar"

@@ -6,9 +6,58 @@ import Link from "next/link";
 
 export default function Contact() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+        setErrorMessage(data.error || 'Failed to send message');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setErrorMessage('Network error. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // Close menu when clicking outside
@@ -41,7 +90,7 @@ export default function Contact() {
                   height={40}
                   className="rounded-full"
                 />
-                <h1 className="text-gray-800 text-xl font-bold">USA FSAE</h1>
+                <h1 className="text-gray-800 text-xl font-bold">Jag Racing</h1>
               </Link>
             </div>
             {/* Mobile menu button */}
@@ -98,6 +147,16 @@ export default function Contact() {
                 Contact Us
               </a>
               <a
+                href="/sponsors"
+                className="text-gray-600 hover:bg-gray-300 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-400"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                </svg>
+                Sponsors
+              </a>
+              <a
                 href="/calendar"
                 className="text-gray-600 hover:bg-gray-300 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-400"
                 onClick={() => setIsMenuOpen(false)}
@@ -132,7 +191,7 @@ export default function Contact() {
                       </svg>
                       <div>
                         <h3 className="font-semibold text-gray-800">Address</h3>
-                        <p className="text-gray-600">University of South Alabama<br />Mechanical Engineering Department<br />Mobile, AL 36688</p>
+                        <p className="text-gray-600">University of South Alabama<br />Shelby Hall<br />Mechanical Engineering Department<br />Mobile, AL 36688</p>
                       </div>
                     </div>
 
@@ -142,7 +201,7 @@ export default function Contact() {
                       </svg>
                       <div>
                         <h3 className="font-semibold text-gray-800">Email</h3>
-                        <p className="text-gray-600">fsae@southalabama.edu</p>
+                        <p className="text-gray-600">sae@southalabama.edu</p>
                       </div>
                     </div>
 
@@ -152,7 +211,7 @@ export default function Contact() {
                       </svg>
                       <div>
                         <h3 className="font-semibold text-gray-800">Meeting Times</h3>
-                        <p className="text-gray-600">Tuesdays & Thursdays<br />6:00 PM - 8:00 PM</p>
+                        <p className="text-gray-600">Check calendar for meeting times<br />Different meeting rooms</p>
                       </div>
                     </div>
                   </div>
@@ -162,56 +221,82 @@ export default function Contact() {
                 <div>
                   <h2 className="text-2xl font-semibold text-gray-800 mb-6">Send us a Message</h2>
                   
-                  <form className="space-y-4">
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    {/* Status Messages */}
+                    {submitStatus === 'success' && (
+                      <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-md">
+                        <strong>Success!</strong> Your message has been sent successfully. We'll get back to you soon!
+                      </div>
+                    )}
+                    
+                    {submitStatus === 'error' && (
+                      <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md">
+                        <strong>Error:</strong> {errorMessage}
+                      </div>
+                    )}
+
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
                       <input
                         type="text"
                         id="name"
                         name="name"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                         placeholder="Your name"
                       />
                     </div>
                     
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
                       <input
                         type="email"
                         id="email"
                         name="email"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                         placeholder="your.email@example.com"
                       />
                     </div>
                     
                     <div>
-                      <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">Subject</label>
+                      <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">Subject *</label>
                       <input
                         type="text"
                         id="subject"
                         name="subject"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        value={formData.subject}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                         placeholder="Message subject"
                       />
                     </div>
                     
                     <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Message *</label>
                       <textarea
                         id="message"
                         name="message"
+                        value={formData.message}
+                        onChange={handleInputChange}
+                        required
                         rows={4}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                         placeholder="Your message here..."
                       ></textarea>
                     </div>
                     
                     <button
                       type="submit"
-                      className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+                      disabled={isSubmitting}
+                      className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      Send Message
+                      {isSubmitting ? 'Sending...' : 'Send Message'}
                     </button>
                   </form>
                 </div>

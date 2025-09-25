@@ -53,7 +53,7 @@ export default function Home() {
                   height={40}
                   className="rounded-full"
                 />
-                <h1 className="text-gray-800 text-xl font-bold">USA FSAE</h1>
+                <h1 className="text-gray-800 text-xl font-bold">Jag Racing</h1>
               </Link>
             </div>
             {/* Mobile menu button */}
@@ -138,7 +138,7 @@ export default function Home() {
       <div className="relative z-10 flex items-center justify-center min-h-[120vh]">
         <div className="text-center text-white px-4">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 drop-shadow-2xl">
-            University of South Alabama FSAE
+            Jag Racing
           </h1>
           <p className="text-xl md:text-2xl max-w-4xl mx-auto drop-shadow-lg">
             Building the next generation of automotive engineers through hands-on experience in Formula SAE racing
@@ -211,7 +211,7 @@ export default function Home() {
 
             {/* About Section */}
             <div className="bg-white rounded-lg shadow-lg p-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">About USA FSAE</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">About Jag Racing</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="text-center">
                   <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">

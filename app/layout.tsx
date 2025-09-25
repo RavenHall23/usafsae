@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "USA FSAE",
-  description: "Website Title for University of South Alabama FSAE",
+  title: "Jag Racing",
+  description: "Jag Racing - University of South Alabama Formula SAE Team",
 };
 
 export default function RootLayout({

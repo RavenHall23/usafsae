@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function Sponsors() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,76 +11,65 @@ export default function Sponsors() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      if (isMenuOpen && !target.closest('#mobile-menu') && !target.closest('button[aria-controls="mobile-menu"]')) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navigation Bar */}
       <nav className="bg-white shadow-lg border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo */}
             <div className="flex items-center">
-              <Image
-                src="/Refine_the_Jag_Motor.png"
-                alt="USA FSAE Logo"
-                width={40}
-                height={40}
-                className="mr-3"
-              />
-              <h1 className="text-gray-800 text-xl font-bold">USA FSAE</h1>
+              <Link href="/" className="flex-shrink-0 flex items-center space-x-3 hover:opacity-80 transition-opacity">
+                <Image
+                  src="/Refine_the_Jag_Motor.png"
+                  alt="Jag Racing Logo"
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+                <h1 className="text-gray-800 text-xl font-bold">Jag Racing</h1>
+              </Link>
             </div>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4">
-                <a
-                  href="/"
-                  className="text-gray-600 hover:bg-gray-100 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200"
-                >
-                  Home
-                </a>
-                <a
-                  href="/calendar"
-                  className="text-gray-600 hover:bg-gray-100 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200"
-                >
-                  Calendar
-                </a>
-                <a
-                  href="/resources"
-                  className="text-gray-600 hover:bg-gray-100 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200"
-                >
-                  Resources
-                </a>
-                <a
-                  href="/sponsors"
-                  className="bg-blue-600 text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-200"
-                >
-                  Sponsors
-                </a>
-                <a
-                  href="/contact"
-                  className="text-gray-600 hover:bg-gray-100 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200"
-                >
-                  Contact
-                </a>
-              </div>
-            </div>
 
             {/* Mobile menu button */}
-            <div className="md:hidden">
+            <div>
               <button
                 onClick={toggleMenu}
                 className="bg-gray-300 hover:bg-gray-400 inline-flex items-center justify-center p-3 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-white transition-all duration-200 min-h-[44px] min-w-[44px]"
-                aria-expanded="false"
-                aria-label="Toggle navigation menu"
+                aria-controls="mobile-menu"
+                aria-expanded={isMenuOpen}
               >
+                <span className="sr-only">Open main menu</span>
                 <svg
-                  className="h-6 w-6"
+                  className={`h-6 w-6 transition-all duration-300 ${isMenuOpen ? 'rotate-45' : ''}`}
+                  xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  strokeWidth="2.5"
-                  d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-                />
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2.5"
+                    d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -87,10 +77,10 @@ export default function Sponsors() {
         {/* Mobile menu */}
         {isMenuOpen && (
           <div id="mobile-menu">
-            <div className="px-4 pt-4 pb-6 space-y-2 bg-white bg-opacity-95 backdrop-blur-sm border-t border-gray-200 shadow-lg">
+            <div className="px-4 pt-4 pb-6 space-y-2 bg-gray-200 border-t border-gray-300 shadow-lg">
               <a
                 href="/resources"
-                className="text-gray-600 hover:bg-gray-100 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-200"
+                className="text-gray-600 hover:bg-gray-300 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-400"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,7 +90,7 @@ export default function Sponsors() {
               </a>
               <a
                 href="/contact"
-                className="text-gray-600 hover:bg-gray-100 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-200"
+                className="text-gray-600 hover:bg-gray-300 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-400"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -110,7 +100,7 @@ export default function Sponsors() {
               </a>
               <a
                 href="/sponsors"
-                className="bg-blue-600 text-white block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-blue-700"
+                className="bg-gray-400 text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-500"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -120,7 +110,7 @@ export default function Sponsors() {
               </a>
               <a
                 href="/calendar"
-                className="text-gray-600 hover:bg-gray-100 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-200"
+                className="text-gray-600 hover:bg-gray-300 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-400"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -148,7 +138,7 @@ export default function Sponsors() {
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Sponsorship Opportunities</h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div>
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Why Sponsor USA FSAE?</h3>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Why Sponsor Jag Racing?</h3>
               <ul className="space-y-2 text-gray-600">
                 <li>• Gain visibility among engineering students and faculty</li>
                 <li>• Support hands-on engineering education</li>
