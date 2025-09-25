@@ -4,9 +4,20 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
+interface Event {
+  id: number;
+  title: string;
+  date: string;
+  time: string;
+  location: string;
+  type: 'meeting' | 'review' | 'competition' | 'fundraising' | 'testing' | 'workshop';
+  description?: string;
+}
+
 export default function Calendar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -27,56 +38,221 @@ export default function Calendar() {
     };
   }, [isMenuOpen]);
 
-  // Sample events data
-  const events = [
-    {
-      id: 1,
-      title: "Team Meeting",
-      date: "2024-01-15",
-      time: "6:00 PM",
-      location: "Engineering Building Room 101",
-      type: "meeting"
-    },
-    {
-      id: 2,
-      title: "Design Review",
-      date: "2024-01-20",
-      time: "2:00 PM",
-      location: "Engineering Building Room 205",
-      type: "review"
-    },
-    {
-      id: 3,
-      title: "FSAE Competition",
-      date: "2024-05-15",
-      time: "All Day",
-      location: "Michigan International Speedway",
-      type: "competition"
-    },
-    {
-      id: 4,
-      title: "Fundraising Event",
-      date: "2024-02-10",
-      time: "7:00 PM",
-      location: "Student Center",
-      type: "fundraising"
-    }
-  ];
+  // SAE Events for September - December 2025
+  const generateEvents = (): Event[] => {
+    const events: Event[] = [
+      // September Events
+      {
+        id: 1,
+        title: "SAE Meeting",
+        date: "2025-09-02",
+        time: "12:30 PM - 1:30 PM",
+        location: "Shelby Hall Room 2216",
+        type: "meeting",
+        description: "Regular SAE team meeting to discuss progress and upcoming tasks"
+      },
+      {
+        id: 2,
+        title: "SAE Officer Meeting",
+        date: "2025-09-10",
+        time: "6:00 PM - 7:00 PM",
+        location: "Shelby Hall Room 2214",
+        type: "meeting",
+        description: "Officer meeting to discuss team leadership and planning"
+      },
+      {
+        id: 4,
+        title: "SAE Officer Meeting",
+        date: "2025-09-24",
+        time: "6:00 PM - 7:00 PM",
+        location: "Shelby Hall Room 2214",
+        type: "meeting",
+        description: "Officer meeting to discuss team leadership and planning"
+      },
+      // October Events
+      {
+        id: 5,
+        title: "SAE Meeting",
+        date: "2025-10-06",
+        time: "12:30 PM - 1:30 PM",
+        location: "Shelby Hall Room 2216",
+        type: "meeting",
+        description: "Regular SAE team meeting to discuss progress and upcoming tasks"
+      },
+      {
+        id: 6,
+        title: "SAE Officer Meeting",
+        date: "2025-10-08",
+        time: "6:00 PM - 7:00 PM",
+        location: "Shelby Hall Room 2214",
+        type: "meeting",
+        description: "Officer meeting to discuss team leadership and planning"
+      },
+      {
+        id: 7,
+        title: "SAE Officer Meeting",
+        date: "2025-10-22",
+        time: "6:00 PM - 7:00 PM",
+        location: "Shelby Hall Room 2214",
+        type: "meeting",
+        description: "Officer meeting to discuss team leadership and planning"
+      },
+      // November Events
+      {
+        id: 9,
+        title: "SAE Meeting",
+        date: "2025-11-03",
+        time: "12:30 PM - 1:30 PM",
+        location: "Shelby Hall Room 2216",
+        type: "meeting",
+        description: "Regular SAE team meeting to discuss progress and upcoming tasks"
+      },
+      {
+        id: 10,
+        title: "SAE Officer Meeting",
+        date: "2025-11-05",
+        time: "6:00 PM - 7:00 PM",
+        location: "Shelby Hall Room 2214",
+        type: "meeting",
+        description: "Officer meeting to discuss team leadership and planning"
+      },
+      {
+        id: 11,
+        title: "Discover Engineering Day",
+        date: "2025-11-06",
+        time: "All Day",
+        location: "TBA",
+        type: "workshop",
+        description: "Discover Engineering Day event"
+      },
+      {
+        id: 12,
+        title: "Fall Car Show",
+        date: "2025-11-09",
+        time: "12:00 PM - 3:00 PM",
+        location: "Shelby Hall Parking Lot",
+        type: "fundraising",
+        description: "Annual fall car show in Shelby Hall parking lot"
+      },
+      {
+        id: 13,
+        title: "SAE Officer Meeting",
+        date: "2025-11-19",
+        time: "6:00 PM - 7:00 PM",
+        location: "Shelby Hall Room 2214",
+        type: "meeting",
+        description: "Officer meeting to discuss team leadership and planning"
+      },
+      // December Events
+      {
+        id: 15,
+        title: "SAE Meeting",
+        date: "2025-12-02",
+        time: "12:30 PM - 1:30 PM",
+        location: "Shelby Hall Room 2216",
+        type: "meeting",
+        description: "Regular SAE team meeting to discuss progress and upcoming tasks"
+      },
+      {
+        id: 16,
+        title: "SAE Officer Meeting",
+        date: "2025-12-03",
+        time: "6:00 PM - 7:00 PM",
+        location: "Shelby Hall Room 2214",
+        type: "meeting",
+        description: "Officer meeting to discuss team leadership and planning"
+      }
+    ];
+
+    return events;
+  };
+
+  const events = generateEvents();
 
   const getEventTypeColor = (type: string) => {
     switch (type) {
-      case 'meeting': return 'bg-blue-100 text-blue-800';
-      case 'review': return 'bg-yellow-100 text-yellow-800';
-      case 'competition': return 'bg-red-100 text-red-800';
-      case 'fundraising': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case "meeting":
+        return "bg-blue-100 text-blue-800 border-blue-200";
+      case "review":
+        return "bg-yellow-100 text-yellow-800 border-yellow-200";
+      case "competition":
+        return "bg-red-100 text-red-800 border-red-200";
+      case "fundraising":
+        return "bg-green-100 text-green-800 border-green-200";
+      case "testing":
+        return "bg-purple-100 text-purple-800 border-purple-200";
+      case "workshop":
+        return "bg-indigo-100 text-indigo-800 border-indigo-200";
+      default:
+        return "bg-gray-100 text-gray-800 border-gray-200";
     }
   };
+
+  const getEventsForDate = (date: Date) => {
+    const dateString = date.toISOString().split('T')[0];
+    return events.filter(event => event.date === dateString);
+  };
+
+  const navigateMonth = (direction: 'prev' | 'next') => {
+    setCurrentDate(prev => {
+      const newDate = new Date(prev);
+      if (direction === 'prev') {
+        newDate.setMonth(prev.getMonth() - 1);
+      } else {
+        newDate.setMonth(prev.getMonth() + 1);
+      }
+      return newDate;
+    });
+  };
+
+  const goToToday = () => {
+    setCurrentDate(new Date());
+    setSelectedDate(null);
+  };
+
+  const getDaysInMonth = (date: Date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
+    
+    const days = [];
+    
+    // Add empty cells for days before the first day of the month
+    for (let i = 0; i < startingDayOfWeek; i++) {
+      days.push(null);
+    }
+    
+    // Add days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+      days.push(new Date(year, month, day));
+    }
+    
+    return days;
+  };
+
+  const isToday = (date: Date) => {
+    const today = new Date();
+    return date.toDateString() === today.toDateString();
+  };
+
+  const isSelected = (date: Date) => {
+    return selectedDate && date.toDateString() === selectedDate.toDateString();
+  };
+
+  const days = getDaysInMonth(currentDate);
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Navigation Bar */}
-      <nav className="bg-gray-200 border-b border-gray-300">
+      <nav className="bg-white shadow-lg border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
@@ -94,9 +270,8 @@ export default function Calendar() {
             {/* Mobile menu button */}
             <div>
               <button
-                type="button"
                 onClick={toggleMenu}
-                className="bg-gray-300 hover:bg-gray-400 inline-flex items-center justify-center p-3 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-200 transition-all duration-200 min-h-[44px] min-w-[44px]"
+                className="bg-gray-300 hover:bg-gray-400 inline-flex items-center justify-center p-3 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-white transition-all duration-200 min-h-[44px] min-w-[44px]"
                 aria-controls="mobile-menu"
                 aria-expanded={isMenuOpen}
               >
@@ -174,76 +349,135 @@ export default function Calendar() {
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
             <div className="bg-white rounded-lg shadow-lg p-8">
-              <h1 className="text-3xl font-bold text-gray-900 mb-8">Calendar</h1>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Calendar Widget */}
-                <div className="lg:col-span-2">
-                  <div className="bg-gray-50 rounded-lg p-6">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Upcoming Events</h2>
-                    <div className="space-y-4">
-                      {events.map((event) => (
-                        <div key={event.id} className="bg-white rounded-lg p-4 shadow-sm border-l-4 border-blue-500">
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <h3 className="font-semibold text-gray-800">{event.title}</h3>
-                              <p className="text-sm text-gray-600 mt-1">
-                                {new Date(event.date).toLocaleDateString('en-US', { 
-                                  weekday: 'long', 
-                                  year: 'numeric', 
-                                  month: 'long', 
-                                  day: 'numeric' 
-                                })} at {event.time}
-                              </p>
-                              <p className="text-sm text-gray-500 mt-1">{event.location}</p>
-                            </div>
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${getEventTypeColor(event.type)}`}>
-                              {event.type.charAt(0).toUpperCase() + event.type.slice(1)}
-                            </span>
+              <div className="flex flex-col lg:flex-row gap-8">
+                {/* Calendar */}
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-6">
+                    <h1 className="text-3xl font-bold text-gray-900">
+                      {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+                    </h1>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => navigateMonth('prev')}
+                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                      >
+                        <svg className="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                      </button>
+                      <button
+                        onClick={goToToday}
+                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                      >
+                        Today
+                      </button>
+                      <button
+                        onClick={() => navigateMonth('next')}
+                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                      >
+                        <svg className="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Calendar Grid */}
+                  <div className="grid grid-cols-7 gap-px bg-gray-200 rounded-lg overflow-hidden">
+                    {/* Day headers */}
+                    {dayNames.map(day => (
+                      <div key={day} className="bg-gray-50 p-3 text-center text-sm font-medium text-gray-500">
+                        {day}
+                      </div>
+                    ))}
+                    
+                    {/* Calendar days */}
+                    {days.map((day, index) => {
+                      if (!day) {
+                        return <div key={index} className="bg-white h-24"></div>;
+                      }
+                      
+                      const dayEvents = getEventsForDate(day);
+                      const isCurrentDay = isToday(day);
+                      const isSelectedDay = isSelected(day);
+                      
+                      return (
+                        <div
+                          key={day.toISOString()}
+                          className={`bg-white h-24 p-1 cursor-pointer hover:bg-gray-50 transition-colors ${
+                            isCurrentDay ? 'bg-blue-50 border-2 border-blue-500' : ''
+                          } ${isSelectedDay ? 'bg-blue-100' : ''}`}
+                          onClick={() => setSelectedDate(day)}
+                        >
+                          <div className={`text-sm font-medium mb-1 ${
+                            isCurrentDay ? 'text-blue-600' : 'text-gray-900'
+                          }`}>
+                            {day.getDate()}
+                          </div>
+                          <div className="space-y-1">
+                            {dayEvents.slice(0, 2).map(event => (
+                              <div
+                                key={event.id}
+                                className={`text-xs px-1 py-0.5 rounded truncate ${getEventTypeColor(event.type)}`}
+                                title={event.title}
+                              >
+                                {event.title}
+                              </div>
+                            ))}
+                            {dayEvents.length > 2 && (
+                              <div className="text-xs text-gray-500">
+                                +{dayEvents.length - 2} more
+                              </div>
+                            )}
                           </div>
                         </div>
-                      ))}
-                    </div>
+                      );
+                    })}
                   </div>
                 </div>
 
-                {/* Quick Actions */}
-                <div className="space-y-6">
-                  <div className="bg-gray-50 rounded-lg p-6">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Quick Actions</h2>
-                    <div className="space-y-3">
-                      <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
-                        Add Event
-                      </button>
-                      <button className="w-full bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors">
-                        Export Calendar
-                      </button>
-                      <button className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors">
-                        Subscribe to Updates
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="bg-gray-50 rounded-lg p-6">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Event Types</h2>
-                    <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                        <span className="text-sm text-gray-600">Meetings</span>
+                {/* Events Sidebar */}
+                <div className="lg:w-80">
+                  <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                    {selectedDate ? 
+                      `Events for ${selectedDate.toLocaleDateString('en-US', { 
+                        weekday: 'long', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })}` : 
+                      'Upcoming Events'
+                    }
+                  </h2>
+                  
+                  <div className="space-y-3 max-h-96 overflow-y-auto">
+                    {(selectedDate ? getEventsForDate(selectedDate) : events.slice(0, 5)).map(event => (
+                      <div key={event.id} className="border border-gray-200 rounded-lg p-3 hover:shadow-md transition-shadow">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-gray-900 text-sm">{event.title}</h3>
+                            <p className="text-xs text-gray-600 mt-1">
+                              {new Date(event.date).toLocaleDateString('en-US', { 
+                                month: 'short', 
+                                day: 'numeric' 
+                              })} • {event.time}
+                            </p>
+                            <p className="text-xs text-gray-500 mt-1">{event.location}</p>
+                            {event.description && (
+                              <p className="text-xs text-gray-600 mt-2">{event.description}</p>
+                            )}
+                          </div>
+                          <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border ${getEventTypeColor(event.type)}`}>
+                            {event.type.charAt(0).toUpperCase() + event.type.slice(1)}
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                        <span className="text-sm text-gray-600">Design Reviews</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                        <span className="text-sm text-gray-600">Competitions</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        <span className="text-sm text-gray-600">Fundraising</span>
-                      </div>
-                    </div>
+                    ))}
+                    
+                    {(!selectedDate ? events : getEventsForDate(selectedDate)).length === 0 && (
+                      <p className="text-gray-500 text-sm text-center py-4">
+                        No events scheduled
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
