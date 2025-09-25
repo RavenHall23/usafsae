@@ -27,15 +27,27 @@ export default function Home() {
   }, [isMenuOpen]);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Navigation Bar */}
-      <nav className="bg-gray-200 border-b border-gray-300">
+    <div className="min-h-screen">
+      {/* Fixed Background Hero Section */}
+      <div className="fixed inset-0 z-0">
+        <div 
+          className="w-full h-full bg-cover bg-center bg-no-repeat bg-fixed"
+          style={{
+            backgroundImage: 'url(/20240501085101_IMG_6563.JPG)',
+            backgroundAttachment: 'fixed'
+          }}
+        >
+        </div>
+      </div>
+
+      {/* Fixed Navigation Bar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-95 backdrop-blur-sm border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
               <Link href="/" className="flex-shrink-0 flex items-center space-x-3 hover:opacity-80 transition-opacity">
                 <Image
-                  src="/jagracing.png"
+                  src="/Refine_the_Jag_Motor.png"
                   alt="Jag Racing Logo"
                   width={40}
                   height={40}
@@ -49,7 +61,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={toggleMenu}
-                className="bg-gray-300 hover:bg-gray-400 inline-flex items-center justify-center p-3 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-200 transition-all duration-200 min-h-[44px] min-w-[44px]"
+                className="bg-gray-300 hover:bg-gray-400 inline-flex items-center justify-center p-3 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-white transition-all duration-200 min-h-[44px] min-w-[44px]"
                 aria-controls="mobile-menu"
                 aria-expanded={isMenuOpen}
               >
@@ -76,10 +88,10 @@ export default function Home() {
         {/* Mobile menu */}
         {isMenuOpen && (
           <div id="mobile-menu">
-            <div className="px-4 pt-4 pb-6 space-y-2 bg-gray-200 border-t border-gray-300 shadow-lg">
+            <div className="px-4 pt-4 pb-6 space-y-2 bg-white bg-opacity-95 backdrop-blur-sm border-t border-gray-200 shadow-lg">
               <a
                 href="/resources"
-                className="text-gray-600 hover:bg-gray-300 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-400"
+                className="text-gray-600 hover:bg-gray-100 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-200"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,7 +101,7 @@ export default function Home() {
               </a>
               <a
                 href="/contact"
-                className="text-gray-600 hover:bg-gray-300 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-400"
+                className="text-gray-600 hover:bg-gray-100 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-200"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,7 +111,7 @@ export default function Home() {
               </a>
               <a
                 href="/calendar"
-                className="text-gray-600 hover:bg-gray-300 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-400"
+                className="text-gray-600 hover:bg-gray-100 hover:text-gray-800 block px-4 py-4 rounded-lg text-lg font-medium transition-all duration-200 min-h-[56px] flex items-center active:bg-gray-200"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -112,17 +124,22 @@ export default function Home() {
         )}
       </nav>
 
+      {/* Hero Content */}
+      <div className="relative z-10 flex items-center justify-center min-h-[120vh]">
+        <div className="text-center text-white px-4">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6 drop-shadow-2xl">
+            University of South Alabama FSAE
+          </h1>
+          <p className="text-xl md:text-2xl max-w-4xl mx-auto drop-shadow-lg">
+            Building the next generation of automotive engineers through hands-on experience in Formula SAE racing
+          </p>
+        </div>
+      </div>
+
       {/* Main Content */}
-      <main className="flex-1">
+      <main className="relative z-10 bg-white">
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
-            {/* Hero Section */}
-            <div className="text-center mb-12">
-              <h1 className="text-4xl font-bold text-gray-900 mb-4">University of South Alabama FSAE</h1>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Building the next generation of automotive engineers through hands-on experience in Formula SAE racing
-              </p>
-            </div>
 
             {/* Image Collage */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12">

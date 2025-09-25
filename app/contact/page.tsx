@@ -35,7 +35,7 @@ export default function Contact() {
             <div className="flex items-center">
               <Link href="/" className="flex-shrink-0 flex items-center space-x-3 hover:opacity-80 transition-opacity">
                 <Image
-                  src="/jagracing.png"
+                  src="/Refine_the_Jag_Motor.png"
                   alt="Jag Racing Logo"
                   width={40}
                   height={40}
